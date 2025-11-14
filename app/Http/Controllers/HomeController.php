@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\BannerStatus;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    //
+    public function home(): \Illuminate\View\View
+    {
+        $banners = Banner::where('is_active', BannerStatus::Active->value)->get();
+        return view('home');
+    }
 }
