@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'image',
+        'images',
+        'description',
+        'price',
+        'discount',
+        'quantity',
+        'category_id',
+    ];
+
+    protected $casts = [
+        'images' => 'array',
+    ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function getPriceWithDiscountAttribute()
+    {
+        if ($this->discount) {
+            return $this->price - $this->discount;
+        }
+        return $this->price;
+    }
+
+    public function getOldPriceAttribute()
+    {
+        if ($this->discount) {
+            return $this->price + $this->discount;
+        }
+        return $this->price;
+    }
+}
