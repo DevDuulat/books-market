@@ -14,6 +14,11 @@
             @endforeach
         </div>
 
-        <div class="swiper-pagination"></div>
+        <div class="swiper-pagination h-10
+            flex items-center justify-start p-3 gap-3
+
+            w-[190px] absolute bottom-4 **!left-1/2 !-translate-x-1/2** bg-white/10 backdrop-blur-[100px] rounded-full
+            z-10">
+        </div>
     </div>
 </div>
