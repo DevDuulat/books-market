@@ -10,8 +10,8 @@ enum BannerStatus: int
     public function label(): string
     {
         return match ($this) {
-            self::ACTIVE => 'Активен',
-            self::INACTIVE => 'Неактивен',
+            self::Active => 'Активен',
+            self::Inactive => 'Неактивен',
         };
     }
 
@@ -23,3 +23,4 @@ enum BannerStatus: int
         ];
     }
 }
+
