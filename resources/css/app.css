@@ -16,3 +16,30 @@
 [x-cloak] {
     display: none !important;
 }
+
+@layer components {
+    .swiper-pagination {
+        left: unset !important;
+        right: unset !important;
+        width: unset !important;
+
+        @apply left-1/2 -translate-x-1/2 !important;
+    }
+    .swiper-pagination-bullet-active {
+        background-color: #FF9027 !important;
+        width: 10px !important;
+        height: 10px !important;
+        transition: all 0.2s ease-in-out;
+        background: #FF9027 !important;
+        opacity: 1 !important;
+    }
+
+    .swiper .swiper-pagination-bullet-active,
+    .swiper-wrapper .swiper-pagination-bullet-active {
+        width: 14px !important;
+        height: 14px !important;
+        background: #FF9027 !important;
+        opacity: 1 !important;
+    }
+
+}
