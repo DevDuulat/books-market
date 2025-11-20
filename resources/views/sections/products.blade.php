@@ -7,13 +7,13 @@
                     <template x-for="cat in categories" :key="cat">
                         <a href="#" @click.prevent="selectCategory(cat)"
                            :class="{
-                               'bg-[#FFF4E9] text-[#FF9027]': activeCategory === cat,
+                               'bg-gray-100 text-[#646464]': activeCategory === cat,
                                'text-gray-600 hover:bg-gray-50': activeCategory !== cat
                            }"
                            class="flex items-center justify-between w-full rounded-xl px-4 py-3 font-medium text-base">
                             <span x-text="cat"></span>
                             <svg class="w-6 h-6"
-                                 :class="{'text-[#FF9027]': activeCategory === cat, 'text-gray-600': activeCategory !== cat}"
+                                 :class="{'text-[#646464]': activeCategory === cat, 'text-gray-600': activeCategory !== cat}"
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M9 5l7 7-7 7"/>
@@ -38,12 +38,16 @@
                         <div x-show="true" x-transition.opacity.duration.300ms
                              class="bg-white rounded-[24px] overflow-hidden flex flex-col p-3 relative shadow-xl hover:shadow-2xl transition max-w-sm border border-gray-100">
 
-                            <button class="absolute top-4 right-4 bg-gray-100 rounded-full p-2 text-gray-500 hover:text-red-500 transition z-10">
+                            <button @click.stop.prevent="$store.wishlist.toggle(product)"
+                                    :class="$store.wishlist.isIn(product.id) ? 'text-red-500' : 'text-gray-500'"
+                                    class="absolute top-4 right-4 bg-gray-100 rounded-full p-2 transition z-10">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                 </svg>
                             </button>
+
+
 
                             <div class="h-64 w-full rounded-[16px] mb-4 overflow-hidden flex justify-center items-center bg-gray-50 p-4">
                                 <img :src="product.img"
@@ -64,9 +68,9 @@
                                         <p x-show="product.old_price" class="text-gray-400 text-sm line-through mt-0.5" x-text="formatPrice(product.old_price)"></p>
                                     </div>
 
-                                    <button @click.stop="addToCart(product)"
+                                    <button @click.stop.prevent="addToCart(product)"
                                             class="bg-gray-200 text-gray-800 p-4 rounded-xl hover:bg-gray-300 transition">
-                                        <x-icons.add-to-card/>
+                                        В корзину
                                     </button>
                                 </div>
                             </div>
@@ -84,12 +88,23 @@
 
     <script>
         function catalog() {
+            const categoriesData = @json($categories);
+            const allCategories = ['Все товары', ...categoriesData];
+            const productsData = @json($products);
+
+
             return {
-                categories: @json($categories),
-                activeCategory: @json($categories->first()),
-                products: @json($products),
+                categories: allCategories,
+                activeCategory: 'Все товары',
+                products: productsData,
+
+
+                get cartCount() {
+                    return Alpine.store('cart').count;
+                },
 
                 get filteredProducts() {
+                    if (this.activeCategory === 'Все товары') return this.products;
                     return this.products.filter(p => p.category === this.activeCategory);
                 },
 
@@ -98,14 +113,22 @@
                 },
 
                 addToCart(product) {
-                    alert(product.name + ' добавлен в корзину');
+                    Alpine.store('cart').add(product);
+                },
+
+                cartTotal() {
+                    return Alpine.store('cart').items.reduce((total, item) => total + item.price * item.quantity, 0);
                 },
 
                 formatPrice(value) {
                     if (!value && value !== 0) return '';
                     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + 'с';
                 },
+
+
+
             };
         }
     </script>
+
 </div>
