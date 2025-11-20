@@ -21,21 +21,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
-<body class="antialiased" x-data="catalog()" x-cloak>
+<body class="antialiased"  x-data="catalog()">
 
 <div>
     @include('layouts.header')
-
     <main>
         @yield('content')
     </main>
-
     @include('layouts.footer')
 </div>
-@stack('page-scripts')
 
 <script>
-
     const swiper = new Swiper('.mySwiper', {
         loop: true,
         pagination: { el: '.swiper-pagination' },
@@ -44,7 +40,115 @@
             prevEl: '.swiper-button-prev',
         },
     });
+</script>
 
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('cart', {
+            items: JSON.parse(localStorage.getItem('cartItems')) || [],
+
+            get count() {
+                return this.items.reduce((total, item) => total + item.quantity, 0);
+            },
+
+            add(product) {
+                const existing = this.items.find(i => i.id === product.id);
+                existing
+                    ? existing.quantity < product.quantity
+                        ? existing.quantity++
+                        : alert('Достигнут лимит доступного количества')
+                    : product.quantity > 0
+                        ? this.items.push({ ...product, quantity: 1 })
+                        : alert('Товар отсутствует на складе');
+
+                this.save();
+            },
+
+            remove(productId) {
+                this.items = this.items.filter(i => i.id !== productId);
+                this.save();
+            },
+
+            clear() {
+                this.items = [];
+                this.save();
+            },
+
+            save() {
+                localStorage.setItem('cartItems', JSON.stringify(this.items));
+            },
+        });
+    });
+
+    function formatPrice(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' с';
+    }
+</script>
+<script>
+    document.addEventListener('alpine:init', () => {
+        const csrfToken = document.querySelector('meta[name=csrf-token]').content;
+
+        Alpine.store('wishlist', {
+            // массив ID товаров из БД
+            items: @json($wishlistProductIds ?? []),
+
+            // Проверка, есть ли товар в wishlist
+            isIn(id) {
+                return this.items.includes(id);
+            },
+
+            // Добавление товара
+            async add(product) {
+                try {
+                    const resp = await fetch(`/wishlist`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ product_id: product.id })
+                    });
+
+                    if (!resp.ok) throw new Error('Ошибка добавления в избранное');
+
+                    this.items.push(product.id);
+                } catch (e) {
+                    console.error(e);
+                }
+            },
+
+            async remove(product) {
+                try {
+                    const resp = await fetch(`/wishlist/${product.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    });
+
+                    if (!resp.ok) throw new Error('Ошибка удаления из избранного');
+
+                    this.items = this.items.filter(i => i !== product.id);
+                } catch (e) {
+                    console.error(e);
+                }
+            },
+
+            async toggle(product) {
+                if (this.isIn(product.id)) {
+                    await this.remove(product);
+                } else {
+                    await this.add(product);
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>
