@@ -1,76 +1,63 @@
 @extends('layouts.app')
+@section('title', 'Избранное')
 
 @section('content')
-    <div class="container mx-auto py-10 px-4">
-        <div class="text-sm text-gray-500 mb-2">
-            <a href="/" class="hover:underline">Башкы бет</a>
-            <span class="mx-1">›</span>
-            Менин заказдарым
-        </div>
+    <div class="container mx-auto mt-[80px] p-4">
+        <h1 class="text-2xl font-bold mb-6">Избранное</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @forelse($wishlists as $wishlist)
+                @php
+                    $product = $wishlist->product;
+                @endphp
 
-        <h1 class="text-3xl font-bold mb-6">
-            Менин заказдарым
-        </h1>
+                <div
+                        x-data="{ product: @js($product) }"
+                        x-show="$store.wishlist.isIn(product.id)"
+                        class="bg-white rounded-[24px] overflow-hidden flex flex-col p-3 relative shadow-xl hover:shadow-2xl transition max-w-sm border border-gray-100">
+                    <button
+                            @click.stop.prevent="$store.wishlist.toggle(product)"
+                            :class="$store.wishlist.isIn(product.id) ? 'text-red-500' : 'text-gray-500'"
+                            class="absolute top-4 right-4 bg-gray-100 rounded-full p-2 transition z-10"
+                            :title="$store.wishlist.isIn(product.id) ? 'Удалить из избранного' : 'Добавить в избранное'">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </button>
 
-        @if($orders->count() === 0)
-            <div class="bg-gray-100 p-6 rounded-lg text-center">
-                Сизде азырынча заказдар жок.
-            </div>
-        @else
 
-            <div class="space-y-8">
-                @foreach($orders as $order)
-                    <div class="bg-white border-b-2 border-gray-100 pb-5">
+                    <div class="h-64 w-full rounded-[16px] mb-4 overflow-hidden flex justify-center items-center bg-gray-50 p-4">
+                        <img src="{{ asset('storage/' . $product->image) }}"
+                             class="max-h-full w-auto object-contain transition-transform duration-300 ease-in-out"/>
+                    </div>
 
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="text-xl font-bold text-orange-600 mb-1">
-                                    Заказ №{{ $order->id }}
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    {{ $order->created_at->format('d.m.Y H:i') }}
-                                </div>
+                    <div class="flex flex-col text-gray-900 px-1">
+                        <p class="text-xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis mb-1">{{ $product->name }}</p>
+                        <div class="text-sm font-medium mb-4 {{ $product->quantity > 0 ? 'text-green-600' : 'text-red-600' }}">
+                            {{ $product->quantity > 0 ? 'В наличии' : 'Нет в наличии' }}
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div class="flex flex-col">
+                                <p class="text-gray-900 text-4xl font-extrabold">{{ number_format($product->price, 0, '.', ' ') }} ₽</p>
+                                @if($product->old_price)
+                                    <p class="text-gray-400 text-sm line-through mt-0.5">{{ number_format($product->old_price, 0, '.', ' ') }} ₽</p>
+                                @endif
                             </div>
 
-                            <div class="text-sm px-4 py-1 rounded-md text-gray-800 font-medium
-                            @if($order->status->value === 0) bg-yellow-300/50  {{-- Күтүү --}}
-                            @elseif($order->status->value === 1) bg-blue-300/50   {{-- Иштеп чыгууда --}}
-                            @elseif($order->status->value === 2) bg-green-300/50  {{-- Бүттү --}}
-                            @elseif($order->status->value === 3) bg-red-300/50    {{-- Жокко чыгарылды --}}
-                            @endif
-                            ">
-                                {{ $order->status->label() }}
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-4 gap-4 text-sm text-gray-500 mb-2 mt-6 border-b pb-1">
-                            <div class="col-span-2">Товарлар</div>
-                            <div class="text-center">Саны</div>
-                            <div class="text-right">Баасы</div>
-                        </div>
-
-                        <div class="space-y-2">
-                            @foreach($order->items as $item)
-                                <div class="grid grid-cols-4 gap-4 text-base">
-                                    <div class="col-span-2">
-                                        {{ $item->product->name ?? 'Товар өчүрүлгөн' }}
-                                    </div>
-                                    <div class="text-center text-gray-700">
-                                        {{ $item->quantity }}
-                                    </div>
-                                    <div class="text-right text-gray-700">
-                                        {{ number_format($item->price, 0) }} сом
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <div class="text-right mt-6 text-xl font-bold">
-                            Бардыгы: <span class="text-orange-600">{{ number_format($order->total, 0) }} сом</span>
+                            <a href="#" class="bg-gray-200 text-gray-800 p-4 rounded-xl hover:bg-gray-300 transition">
+                                В корзину
+                            </a>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        @endif
+                </div>
+            @empty
+            @endforelse
+        </div>
+
+        <div x-show="$store.wishlist.items.length === 0" class="col-span-full text-center text-gray-500 py-10">
+            В избранном пока нет товаров.
+        </div>
+
     </div>
 @endsection
