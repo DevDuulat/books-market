@@ -31,7 +31,6 @@ class HomeController extends Controller
                 ];
             });
 
-
         return view('home', compact('categories', 'products', 'banners'));
     }
 }
