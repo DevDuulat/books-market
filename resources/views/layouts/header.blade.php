@@ -4,7 +4,10 @@
             <p class="text-gray-700 font-bold">
                 Жеткирүү кун сайын 09:00дөн 21:00гө чейин
             </p>
-            <p class="text-gray-700 font-bold">+996 700 600 500</p>
+            <a href="tel:+996700600500" class="text-gray-700 font-bold">
+                +996 700 600 500
+            </a>
+
         </div>
     </div>
 
