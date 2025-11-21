@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home']);
 
-Route::get('/products/category/{category:slug}', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index'); 
 
+Route::get('/products/category/{category:slug}', [ProductController::class, 'index'])->name('products.category'); // товары по категории
+Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
 
 Route::middleware(['auth'])->group(function () {
