@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'logo' => env('APP_LOGO', '/assets/logo_nurs1.png'),
+
+
 ];

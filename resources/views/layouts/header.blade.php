@@ -13,9 +13,14 @@
 
             <div class="flex items-center space-x-4">
                 <a href="/">
-                    <div class="h-10 w-24 bg-gray-300 rounded"></div>
+                    <img
+                            src="{{ config('app.logo') }}"
+                            alt="Logo"
+                            class="h-16 object-contain"
+                    >
                 </a>
             </div>
+
 
             <div class="flex items-center space-x-6">
                 <div x-data="{ open: false }" class="relative">
