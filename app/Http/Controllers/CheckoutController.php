@@ -51,7 +51,7 @@ class CheckoutController extends Controller
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'address' => $request->address,
-                'status' => OrderStatus::Pending->value,
+                'status' => OrderStatus::New->value,
                 'total' => collect($cart)->sum(fn ($i) => $i['price'] * $i['quantity']),
             ]);
 
@@ -88,7 +88,6 @@ class CheckoutController extends Controller
                 $message .= "- " . $item['name'] . " x " . $item['quantity'] . " = " . ($item['price'] * $item['quantity']) . "\n";
             }
 
-            // Логируем сообщение перед отправкой
             Log::info('Telegram message payload', [
                 'chat_id' => $chatId,
                 'text' => $message
@@ -99,7 +98,6 @@ class CheckoutController extends Controller
                 'text' => $message
             ]);
 
-            // Логируем ответ Telegram API
             Log::info('Telegram response', $response->json());
 
             session()->forget('cart');
@@ -109,7 +107,6 @@ class CheckoutController extends Controller
                 ->with('success', 'Заказ успешно создан');
         } catch (\Throwable $e) {
             DB::rollBack();
-            Log::error('Ошибка при создании заказа или отправке Telegram', ['error' => $e->getMessage()]);
             throw $e;
         }
     }
