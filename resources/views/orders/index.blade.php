@@ -15,7 +15,7 @@
         @if($orders->count() === 0)
             <div class="bg-white p-10 rounded-xl shadow-lg text-center border border-gray-200">
                 <p class="text-xl font-semibold mb-4 text-gray-700">Сизде азырынча заказдар жок.</p>
-                <p class="text-gray-500 mb-6">Дүкөнгө өтүп, биринчи заказыңызды жасаңыз!</p>
+                <p class="text-gray-500 mb-6">Дүкөнгө өтүп, биринчи заказыңызды жасаңыз.</p>
                 <a href="/shop" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150">
                     Дүкөнгө өтүү
                 </a>
@@ -32,18 +32,22 @@
                                     Заказ №{{ $order->id }}
                                 </div>
                                 <div class="text-sm text-gray-500">
-                                    {{ $order->created_at->format('d.m.Y') }} {{-- Убакытты кичинекей кылып, датаны баса белгилөө --}}
+                                    {{ $order->created_at->format('d.m.Y') }}
                                     <span class="text-xs ml-1">({{ $order->created_at->format('H:i') }})</span>
                                 </div>
                             </div>
 
-                            <div class="text-sm px-3 py-1 rounded-full text-gray-900 font-semibold uppercase tracking-wider
-                            @if($order->status->value === 0) bg-yellow-400/70  {{-- Күтүү --}}
-                            @elseif($order->status->value === 1) bg-blue-400/70   {{-- Иштеп чыгууда --}}
-                            @elseif($order->status->value === 2) bg-green-400/70  {{-- Бүттү --}}
-                            @elseif($order->status->value === 3) bg-red-400/70    {{-- Жокко чыгарылды --}}
-                            @endif
-                            ">
+                            @php
+                                $status = $order->status->value;
+                                $statusClass = match($status) {
+                                    0 => 'bg-yellow-400/70',   // Новый
+                                    1 => 'bg-green-400/70',    // Завершён
+                                    2 => 'bg-red-400/70',      // Отменён
+                                    default => 'bg-gray-300', // На будущее
+                                };
+                            @endphp
+
+                            <div class="text-sm px-3 py-1 rounded-full text-gray-900 font-semibold uppercase tracking-wider {{ $statusClass }}">
                                 {{ $order->status->label() }}
                             </div>
                         </div>
