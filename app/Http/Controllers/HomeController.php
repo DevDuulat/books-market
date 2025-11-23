@@ -12,9 +12,14 @@ class HomeController extends Controller
     public function home(): \Illuminate\View\View
     {
         $banners = Banner::where('is_active', BannerStatus::Active->value)->get();
-        $categories = Category::pluck('name');
+
+        $categories = Category::where('name', '!=', 'книги')->pluck('name'); // **ИЗМЕНЕНИЕ ЗДЕСЬ**
+
         $products = Product::with('category')
             ->where('quantity', '>', 0)
+            ->whereHas('category', function ($query) {
+                $query->where('name', '!=', 'книги');
+            })
             ->get()
             ->map(function ($product) {
                 return [
