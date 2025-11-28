@@ -17,6 +17,9 @@ class OrderResource extends Resource
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Заказы';
+    protected static ?string $pluralLabel = 'Заказы';
+    protected static ?string $modelLabel = 'Заказ';
 
     public static function form(Form $form): Form
     {
@@ -25,23 +28,28 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('user_id')
                     ->numeric()
                     ->label('ID пользователя'),
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
                     ->label('Имя клиента'),
+
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->required()
                     ->maxLength(255)
                     ->label('Телефон'),
+
                 Forms\Components\Textarea::make('address')
                     ->required()
                     ->columnSpanFull()
                     ->label('Адрес доставки'),
+
                 Forms\Components\TextInput::make('total')
                     ->required()
                     ->numeric()
                     ->label('Итоговая сумма'),
+
                 Forms\Components\TextInput::make('status')
                     ->required()
                     ->numeric()
@@ -54,9 +62,28 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label('Имя клиента'),
-                TextColumn::make('phone')->label('Телефон'),
-                TextColumn::make('total')->numeric()->label('Сумма заказа'),
+                TextColumn::make('name')
+                    ->label('Имя клиента')
+                    ->searchable(),
+
+                TextColumn::make('phone')
+                    ->label('Телефон')
+                    ->searchable(),
+
+                TextColumn::make('total')
+                    ->numeric()
+                    ->label('Сумма заказа')
+                    ->sortable(),
+
+                TextColumn::make('created_at')
+                    ->label('Создано')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('status')
+                    ->label('Статус')
+                    ->sortable(),
             ])
             ->actions([
                 Action::make('view')
