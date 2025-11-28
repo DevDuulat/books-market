@@ -29,7 +29,7 @@
                         <div class="flex justify-between items-start border-b pb-4 mb-4">
                             <div>
                                 <div class="text-2xl font-extrabold text-orange-600 mb-1">
-                                    Заказ №{{ $order->id }}
+                                    Тапшырык №{{ $order->id }}
                                 </div>
                                 <div class="text-sm text-gray-500">
                                     {{ $order->created_at->format('d.m.Y') }}
@@ -40,10 +40,10 @@
                             @php
                                 $status = $order->status->value;
                                 $statusClass = match($status) {
-                                    0 => 'bg-yellow-400/70',   // Новый
-                                    1 => 'bg-green-400/70',    // Завершён
-                                    2 => 'bg-red-400/70',      // Отменён
-                                    default => 'bg-gray-300', // На будущее
+                                    0 => 'bg-yellow-400/70',
+                                    1 => 'bg-green-400/70',
+                                    2 => 'bg-red-400/70',
+                                    default => 'bg-gray-300',
                                 };
                             @endphp
 
@@ -78,7 +78,6 @@
                             <span class="text-lg font-semibold text-gray-800">Бардыгы:</span>
                             <span class="text-2xl font-extrabold text-orange-600 ml-2">{{ number_format($order->total, 0) }} сом</span>
                         </div>
-
                     </div>
                 @endforeach
             </div>

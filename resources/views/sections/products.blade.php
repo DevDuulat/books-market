@@ -8,17 +8,16 @@
                                 ' text-gray-800 hover:bg-gray-200': activeCategory !== cat
                             }"
                             class="flex-shrink-0 rounded-lg px-5 py-2.5 font-medium text-sm transition duration-150 ease-in-out">
-                        <span x-text="cat.replace('Все товары', 'Все')"></span>
+                        <span x-text="cat.replace('Бардык товарлар', 'Бардыгы')"></span>
                     </button>
                 </template>
             </div>
         </div>
 
         <div class="grid grid-cols-12 gap-6">
-
             <div class="col-span-12 md:col-span-3 hidden md:block">
                 <div class="sticky top-20 h-[calc(100vh-5rem)] overflow-auto">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800">Категории</h2>
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">Категориялар</h2>
                     <div class="bg-white rounded-2xl p-3 flex flex-col shadow-lg">
                         <template x-for="cat in categories" :key="cat">
                             <a href="#" @click.prevent="selectCategory(cat)"
@@ -44,26 +43,26 @@
                 <div class="flex items-baseline justify-between mb-4">
                     <h2 class="text-xl font-bold text-gray-800" x-text="activeCategory"></h2>
                     <p class="text-sm text-gray-500">
-                        Найдено: <span x-text="filteredProducts.length"></span>
+                        Табылды: <span x-text="filteredProducts.length"></span>
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
                     <template x-for="product in filteredProducts" :key="product.id">
                         <a :href="`/products/${product.slug}`" class="block">
                             <div x-show="true" x-transition.opacity.duration.300ms
                                  class="bg-white rounded-[14px] overflow-hidden flex flex-col p-2 md:p-3 relative shadow-xl hover:shadow-2xl transition max-w-sm border border-gray-100">
-
-                                <button @click.stop.prevent="$store.wishlist.toggle(product)"
-                                        :class="$store.wishlist.isIn(product.id) ? 'text-red-500' : 'text-gray-500'"
-                                        class="absolute top-2 right-2 md:top-4 md:right-4 rounded-full p-1 md:p-2 transition z-10">
-                                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor"
-                                         viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                <button
+                                        @click.stop.prevent="$store.wishlist.toggle(product)"
+                                        :class="$store.wishlist.isIn(product.id) ? 'text-[#FF2E17] fill-[#FF2E17] bg-[#FFF4E9]' : 'text-[#FF9027] bg-[#FFF4E9]'"
+                                        class="absolute bg-[#FFF4E9] top-2 right-2 md:top-4 md:right-4 rounded-[12px] p-1 md:p-2 transition z-10"
+                                        title="Сүйүктүүлөргө сактоо"
+                                >
+                                    <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13.7373 1C14.8652 1 15.7614 1.36915 16.4941 2.10156C17.2266 2.83379 17.5956 3.7293 17.5957 4.85645C17.5957 5.3676 17.5179 5.8746 17.3584 6.37988L17.2852 6.5957C17.0832 7.15371 16.7074 7.82081 16.1191 8.59961C15.6783 9.18325 15.1109 9.84138 14.4131 10.5762L13.6719 11.3369C12.621 12.3881 11.2813 13.6506 9.65039 15.127L9.29785 15.4453L8.94531 15.127C7.31882 13.65 5.98026 12.387 4.92676 11.3359C4.00859 10.4198 3.27154 9.60754 2.70801 8.89746L2.47754 8.59961L2.2666 8.3125C1.79773 7.65548 1.48725 7.08467 1.31055 6.59668C1.10157 6.01948 1 5.44113 1 4.8584C1.00008 3.73046 1.37004 2.83504 2.10254 2.10254C2.8353 1.36984 3.73067 1.00002 4.8584 1C5.55545 1 6.20917 1.16319 6.83301 1.49512C7.45251 1.82486 8.00538 2.31049 8.48828 2.97656L9.28516 4.0752L10.0986 2.98926C10.6042 2.31411 11.1665 1.82336 11.7803 1.49219C12.39 1.16319 13.0374 1.00003 13.7373 1Z" stroke="currentColor" stroke-width="2"/>
                                     </svg>
                                 </button>
+
 
                                 <div class="h-40 md:h-64 w-full rounded-[10px] md:rounded-[16px] mb-2 overflow-hidden flex justify-center items-center p-2">
                                     <img :src="product.img"
@@ -76,12 +75,12 @@
                                        x-text="product.name"></p>
                                     <div class="text-xs md:text-sm font-medium mb-2"
                                          :class="product.quantity > 0 ? 'text-green-600' : 'text-red-600'"
-                                         x-text="product.quantity > 0 ? 'В наличии' : 'Нет в наличии'">
+                                         x-text="product.quantity > 0 ? 'Кампада' : 'Кампада жок'">
                                     </div>
 
                                     <div class="flex items-end justify-between mt-2">
                                         <div class="flex flex-col">
-                                            <p class="text-2xl md:text-4xl font-extrabold"
+                                            <p class="text-2xl text-[#FF9027] md:text-3xl font-extrabold"
                                                x-text="formatPrice(product.price)"></p>
                                             <p x-show="product.old_price && product.old_price > product.price"
                                                class="text-xs md:text-sm text-gray-400 line-through mt-0.5"
@@ -103,7 +102,7 @@
                     </template>
 
                     <div x-show="filteredProducts.length === 0" class="col-span-full text-center text-gray-500 py-10">
-                        Товары не найдены в этой категории.
+                        Бул категорияда товарлар табылган жок.
                     </div>
 
                 </div>
@@ -120,7 +119,7 @@
                 return {
                     categories: allCategories,
                     products: @json($products),
-                    activeCategory: categoriesData[0] || 'Категории',
+                    activeCategory: categoriesData[0] || 'Категориялар',
 
                     get filteredProducts() {
                         if (!this.products || this.products.length === 0) return [];

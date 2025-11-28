@@ -12,7 +12,6 @@
             <p class="text-lg font-semibold flex justify-between items-center">
                 <span class="text-gray-600">Статус:</span>
                 <span class="px-3 py-1 text-sm font-medium rounded-full
-                             {{-- Классы для статуса можно настроить в зависимости от $order->status->label() --}}
                              @if($order->status->label() === 'Жаңы') bg-blue-100 text-blue-800
                              @elseif($order->status->label() === 'Жеткирүүдө') bg-yellow-100 text-yellow-800
                              @elseif($order->status->label() === 'Аткарылган') bg-green-100 text-green-800

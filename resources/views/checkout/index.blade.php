@@ -6,7 +6,7 @@
         <div class="text-sm text-gray-500 mb-8">
             <a href="#" class="hover:text-orange-500">Башкы бет</a>
             <span class="mx-2">&gt;</span>
-            <a href="#" class="hover:text-orange-500">Корзина</a>
+            <a href="#" class="hover:text-orange-500">Себет</a>
             <span class="mx-2">&gt;</span>
             <span class="text-gray-900 font-medium">Заказ берүү</span>
         </div>

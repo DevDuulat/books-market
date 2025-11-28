@@ -21,8 +21,8 @@
                        x-data="{ product: @js($product) }">
 
                         <button @click.stop.prevent="$store.wishlist.toggle(product)"
-                                :class="$store.wishlist.isIn(product.id) ? 'text-red-500' : 'text-gray-500'"
-                                class="absolute top-2 right-2 bg-gray-100 rounded-full p-1 transition z-10">
+                                :class="$store.wishlist.isIn(product.id) ? 'text-[#FF2E17] bg-[#FFF4E9]' : 'text-[#FF9027] bg-[#FFF4E9]'"
+                                class="absolute top-2 right-2 bg-gray-100 rounded-[12px] p-1 transition z-10">
                             <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
@@ -41,12 +41,12 @@
 
                             @php $isInStock = $product->quantity ?? 1; @endphp
                             <div class="text-xs sm:text-sm font-medium mb-2 @if($isInStock > 0) text-green-600 @else text-red-600 @endif">
-                                {{ $isInStock > 0 ? 'В наличии' : 'Нет в наличии' }}
+                                {{ $isInStock > 0 ? 'Кампада' : 'Кампада жок' }}
                             </div>
 
                             <div class="flex items-center justify-between mt-auto">
                                 <div class="flex flex-col leading-none">
-                                    <p class="text-gray-900 text-xl sm:text-2xl md:text-4xl font-extrabold">{{ $product->price }}с</p>
+                                    <p class="text-[#FF9027] sm:text-3xl md:text-3xl font-extrabold">{{ $product->price }}с</p>
 
                                     @if(isset($product->old_price) && $product->old_price > $product->price)
                                         <p class="text-gray-400 text-xs sm:text-sm line-through mt-0.5">{{ $product->old_price }}с</p>
@@ -71,15 +71,16 @@
                     </a>
                 @empty
                     <div class="col-span-2 md:col-span-3 lg:col-span-4 text-center py-10 text-gray-500">
-                        Товары не найдены.
+                        Товарлар табылган жок.
                     </div>
                 @endforelse
             </div>
         </div>
 
         <div class="p-4">
-            {{ $products->links() }}
+            {{ $products->links('vendor.pagination.custom') }}
         </div>
+
     </div>
 
 @endsection

@@ -1,6 +1,5 @@
 <header class="main-header" x-data="{ categoriesOpen: false }">
 
-    <!-- Desktop Top Bar -->
     <div class="hidden lg:block bg-[#F5F5F5] text-sm py-2">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <p class="text-gray-700 font-bold">
@@ -12,25 +11,21 @@
         </div>
     </div>
 
-    <!-- Desktop Navigation -->
     <nav class="hidden lg:block bg-white w-full border-b">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
 
-            <!-- Logo -->
             <div class="flex items-center">
                 <a href="/">
                     <img src="{{ config('app.logo') }}" alt="Logo" class="h-16 object-contain">
                 </a>
             </div>
 
-            <!-- Categories + Search -->
             <div class="flex items-center space-x-6">
 
-                <!-- Categories Dropdown -->
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"
                             class="flex items-center justify-between w-[338px] rounded-[12px] px-4 py-3 font-medium text-[16px] text-[#646464] hover:bg-gray-50">
-                        Категории
+                        Категориялар
                         <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-90': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                             <path d="M16.0464 11.6464C16.2417 11.8417 16.2417 12.1583 16.0464 12.3536L10.7536 17.6464C10.5583 17.8417 10.2417 17.8417 10.0464 17.6464L9.35355 16.9536C9.15829 16.7583 9.15829 16.4417 9.35355 16.2464L13.2464 12.3536C13.4417 12.1583 13.4417 11.8417 13.2464 11.6464L9.35355 7.75355C9.15829 7.55829 9.15829 7.24171 9.35355 7.04645L10.0464 6.35355C10.2417 6.15829 10.5583 6.15829 10.7536 6.35355L16.0464 11.6464Z" fill="#646464"/>
                         </svg>
@@ -51,7 +46,7 @@
                             @endforeach
 
                         @else
-                            <span class="px-4 py-3 text-gray-500">Нет доступных категорий.</span>
+                            <span class="px-4 py-3 text-gray-500">Жеткиликтүү категориялар жок.</span>
                         @endif
                     </div>
                 </div>
@@ -72,7 +67,6 @@
             </div>
 
             <div class="flex items-center space-x-4 text-sm font-medium">
-
                 <a href="{{route('wishlist.index')}}" class="p-3 inline-flex items-center justify-center rounded-lg">
                     <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.8477 19.5921L9.65417 18.5141C7.74744 16.7828 6.1706 15.2951 4.92362 14.051C3.67685 12.807 2.68878 11.7021 1.95942 10.7362C1.22986 9.77044 0.720903 8.88932 0.432542 8.09287C0.144181 7.29643 0 6.48832 0 5.66854C0 4.05971 0.5425 2.71279 1.6275 1.62779C2.71269 0.542597 4.05961 0 5.66825 0C6.67431 0 7.62494 0.238194 8.52017 0.714583C9.41519 1.19097 10.191 1.88203 10.8477 2.78775C11.5259 1.88203 12.3065 1.19097 13.1895 0.714583C14.0722 0.238194 15.0181 0 16.0271 0C17.6357 0 18.9826 0.542402 20.0678 1.62721C21.1528 2.71182 21.6953 4.05815 21.6953 5.66621C21.6953 6.48735 21.5512 7.29614 21.2628 8.09258C20.9744 8.88922 20.4657 9.77025 19.7365 10.7357C19.0073 11.7011 18.0203 12.8062 16.7755 14.051C15.5309 15.2961 13.9527 16.7838 12.0412 18.5141L10.8477 19.5921Z" fill="#FF2E17"/>
@@ -91,7 +85,7 @@
 
                     <div x-show="open" @click.outside="open = false" x-transition
                          class="absolute right-0 top-12 mt-2 w-96 bg-white shadow-lg rounded-xl p-4 z-50">
-                        <h3 class="font-semibold text-lg mb-4">Корзина</h3>
+                        <h3 class="font-semibold text-lg mb-4">Себет</h3>
 
                         <template x-if="$store.cart.items.length > 0">
                             <div class="flex flex-col gap-3 max-h-80 overflow-auto">
@@ -101,8 +95,8 @@
                                             <img :src="item.img" class="w-14 h-14 object-cover rounded-lg">
                                             <div>
                                                 <p class="font-medium" x-text="item.name"></p>
-                                                <p class="text-sm text-gray-500">Цена: <span x-text="formatPrice(item.price)"></span></p>
-                                                <p class="text-sm text-gray-500">Кол-во: <span x-text="item.quantity"></span></p>
+                                                <p class="text-sm text-gray-500">Баасы: <span x-text="formatPrice(item.price)"></span></p>
+                                                <p class="text-sm text-gray-500">Саны: <span x-text="item.quantity"></span></p>
                                             </div>
                                         </div>
                                         <button @click="$store.cart.remove(item.id)"
@@ -113,11 +107,11 @@
                         </template>
 
                         <template x-if="$store.cart.items.length === 0">
-                            <p class="text-gray-500 text-center py-10">Корзина пуста</p>
+                            <p class="text-gray-500 text-center py-10">Себет бош</p>
                         </template>
 
                         <div class="mt-4 border-t pt-3 flex justify-between items-center">
-                            <span class="font-semibold">Итого:</span>
+                            <span class="font-semibold">Бардыгы:</span>
                             <span class="font-bold text-lg"
                                   x-text="formatPrice($store.cart.items.reduce((total, i) => total + i.price * i.quantity, 0))"></span>
                         </div>
@@ -127,7 +121,7 @@
                             <input type="hidden" name="cart" :value="JSON.stringify($store.cart.items)" />
                             <button type="submit"
                                     class="w-full mt-3 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition">
-                                Оформить заказ
+                                Заказ кылуу
                             </button>
                         </form>
                     </div>
@@ -140,13 +134,13 @@
                                 {{ auth()->user()->name }}
                             </button>
                             <div x-show="open" @click.outside="open = false" x-transition
-                                 class="absolute left-0 mt-2 bg-white shadow-[0_0_4px_0_#EBEBEB] rounded-[16px] p-4 flex flex-col z-50 w-[300px]">
+                                 class="absolute right-0 mt-2 bg-white shadow-[0_0_4px_0_#EBEBEB] rounded-[16px] p-4 flex flex-col z-50 w-[300px]">
                                 <div class="flex flex-col mb-4">
                                     <span class="font-semibold">{{ auth()->user()->name }}</span>
                                     <span class="text-sm text-gray-500">{{ auth()->user()->email }}</span>
                                 </div>
-                                <a href="{{ route('orders.index') }}" class="flex items-center gap-2 px-4 py-3 rounded-[12px] hover:bg-gray-100">Мои заказы</a>
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="flex items-center gap-2 px-4 py-3 rounded-[12px] text-red-500 hover:bg-gray-100">Выйти</a>
+                                <a href="{{ route('orders.index') }}" class="flex items-center gap-2 px-4 py-3 rounded-[12px] hover:bg-gray-100">Менин буйруктарым</a>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="flex items-center gap-2 px-4 py-3 rounded-[12px] text-red-500 hover:bg-gray-100">Чыгуу</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">@csrf</form>
                             </div>
                         </div>
@@ -191,7 +185,7 @@
                     </button>
                     <div x-show="open" @click.outside="open = false" x-transition
                          class="absolute right-2 top-10 mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-50">
-                        <h3 class="font-semibold text-lg mb-4">Корзина</h3>
+                        <h3 class="font-semibold text-lg mb-4">Себет</h3>
                         <template x-if="$store.cart.items.length > 0">
                             <div class="flex flex-col gap-3 max-h-80 overflow-auto">
                                 <template x-for="item in $store.cart.items" :key="item.id">
@@ -200,8 +194,8 @@
                                             <img :src="item.img" class="w-14 h-14 object-cover rounded-lg">
                                             <div>
                                                 <p class="font-medium" x-text="item.name"></p>
-                                                <p class="text-sm text-gray-500">Цена: <span x-text="formatPrice(item.price)"></span></p>
-                                                <p class="text-sm text-gray-500">Кол-во: <span x-text="item.quantity"></span></p>
+                                                <p class="text-sm text-gray-500">Баасы: <span x-text="formatPrice(item.price)"></span></p>
+                                                <p class="text-sm text-gray-500">Саны: <span x-text="item.quantity"></span></p>
                                             </div>
                                         </div>
                                         <button @click="$store.cart.remove(item.id)" class="text-red-500 hover:text-red-700 font-bold text-lg">&times;</button>
@@ -210,10 +204,10 @@
                             </div>
                         </template>
                         <template x-if="$store.cart.items.length === 0">
-                            <p class="text-gray-500 text-center py-10">Корзина пуста</p>
+                            <p class="text-gray-500 text-center py-10">Себет бош</p>
                         </template>
                         <div class="mt-4 border-t pt-3 flex justify-between items-center">
-                            <span class="font-semibold">Итого:</span>
+                            <span class="font-semibold">Бардыгы:</span>
                             <span class="font-bold text-lg"
                                   x-text="formatPrice($store.cart.items.reduce((total, i) => total + i.price * i.quantity, 0))"></span>
                         </div>
@@ -222,7 +216,7 @@
                             <input type="hidden" name="cart" :value="JSON.stringify($store.cart.items)" />
                             <button type="submit"
                                     class="w-full mt-3 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition">
-                                Оформить заказ
+                                Заказ кылуу
                             </button>
                         </form>
                     </div>
