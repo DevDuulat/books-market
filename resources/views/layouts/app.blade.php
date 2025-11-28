@@ -89,15 +89,12 @@
         const csrfToken = document.querySelector('meta[name=csrf-token]').content;
 
         Alpine.store('wishlist', {
-            // массив ID товаров из БД
             items: @json($wishlistProductIds ?? []),
 
-            // Проверка, есть ли товар в wishlist
             isIn(id) {
                 return this.items.includes(id);
             },
 
-            // Добавление товара
             async add(product) {
                 try {
                     const resp = await fetch(`/wishlist`, {
