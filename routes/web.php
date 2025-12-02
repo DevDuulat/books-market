@@ -16,7 +16,8 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/category/{category:slug}', [ProductController::class, 'index'])->name('products.category'); // товары по категории
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-
+Route::post('/upload-image', [\App\Http\Controllers\UploadController::class, 'store'])
+    ->middleware('auth');
 Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');

@@ -23,11 +23,15 @@ class BannerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image_path')
-                    ->label('Изображение')
-                    ->image()
-                    ->required(),
+//                Forms\Components\FileUpload::make('image_path')
+//                    ->label('Изображение')
+//                    ->image()
+//                    ->required(),
 
+                Forms\Components\ViewField::make('image_path')
+                    ->label('Изображение')
+                    ->view('filament.custom.banner-upload')
+                    ->required(),
                 Forms\Components\TextInput::make('is_active')
                     ->label('Активен')
                     ->required()
