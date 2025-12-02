@@ -31,6 +31,7 @@ class BannerResource extends Resource
                 Forms\Components\ViewField::make('image_path')
                     ->label('Изображение')
                     ->view('filament.custom.banner-upload')
+                    ->extraAttributes(['directory' => 'uploads/banners'])
                     ->required(),
                 Forms\Components\TextInput::make('is_active')
                     ->label('Активен')

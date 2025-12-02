@@ -33,20 +33,19 @@ class ProductResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                FileUpload::make('image')
+                Forms\Components\ViewField::make('image')
                     ->label('Изображение')
-                    ->image()
-                    ->directory('products')
-                    ->disk('public')
-                    ->maxSize(1024),
+                    ->view('filament.custom.banner-upload')
+                    ->extraAttributes(['directory' => 'products']),
 
-                FileUpload::make('images')
+                Forms\Components\ViewField::make('images')
                     ->label('Галерея')
-                    ->image()
-                    ->directory('products')
-                    ->disk('public')
-                    ->multiple()
-                    ->maxSize(1024),
+                    ->view('filament.custom.multi-upload')
+                    ->extraAttributes([
+                        'directory' => 'products',
+                        'label' => 'Галерея'
+                    ])
+                    ->required(),
 
                 Forms\Components\Textarea::make('description')
                     ->label('Описание')

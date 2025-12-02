@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +17,11 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/category/{category:slug}', [ProductController::class, 'index'])->name('products.category'); // товары по категории
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-Route::post('/upload-image', [\App\Http\Controllers\UploadController::class, 'store'])
+Route::post('/upload-image', [UploadController::class, 'storeSingle'])
     ->middleware('auth');
+Route::post('/upload-images', [UploadController::class, 'storeMultiple'])
+    ->middleware('auth');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
