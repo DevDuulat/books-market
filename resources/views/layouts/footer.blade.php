@@ -38,8 +38,8 @@
                 <ul class="space-y-2 text-sm text-gray-600">
                     <li>09:00дөн 21:00гө чейин жеткирүү</li>
                     <li>
-                        <a href="tel:+996700600500" class="hover:text-red-600 font-medium">
-                            +996 700 600 500
+                        <a href="tel:+996555809060" class="hover:text-red-600 font-medium">
+                        +996555809060
                         </a>
                     </li>
                 </ul>
