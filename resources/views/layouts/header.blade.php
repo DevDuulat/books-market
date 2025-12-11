@@ -5,8 +5,8 @@
             <p class="text-gray-700 font-bold">
                 Жеткирүү кун сайын 09:00дөн 21:00гө чейин
             </p>
-            <a href="tel:+996700600500" class="text-gray-700 font-bold">
-                +996 700 600 500
+            <a href="tel:+996555809060" class="text-gray-700 font-bold">
+              996 (555)80 90 60<
             </a>
         </div>
     </div>
@@ -157,7 +157,7 @@
             <p class="font-bold text-sm">
                 Жеткирүү кун сайын <br> 09:00дөн 21:00гө чейин
             </p>
-            <a href="tel:+996700600500" class="font-bold text-lg">+996 700 600 500</a>
+            <a href="tel:+996555809060" class="font-bold text-lg">+996 (555)80 90 60</a>
         </div>
     </div>
 
