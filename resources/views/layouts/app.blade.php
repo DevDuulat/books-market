@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Рисале-и Нур Китептер | {{ config('app.name') }}</title>
+    <meta name="description" content="Рисале-и Нур китептери. Илим, руханий тарбия жана терең мазмундуу ислам ой-жүгүртүүлөрү.">
+    <meta name="keywords" content="Рисале-и Нур, китептер, ислам, руханий тарбия, руханий илим, Саид Нурси">
+    <meta name="author" content="{{ config('app.name') }}"> 
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <meta property="og:title" content="Рисале-и Нур Китептер">
+    <meta property="og:description" content="Рисале-и Нур топтому менен таанышыңыз. Руханий билим жана илим.">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:title" content="Рисале-и Нур Китептер">
+    <meta name="twitter:description" content="Рисале-и Нур топтому. Руханий билим жана илим.">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
