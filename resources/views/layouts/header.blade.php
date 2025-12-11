@@ -20,7 +20,7 @@
                 </a>
             </div>
 
-            <div class="col-span-8 flex items-center space-x-6">
+            <div class="col-span-7 flex items-center space-x-6">
 
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="col-span-3 flex items-center justify-end space-x-4 text-sm font-medium">
+            <div class="col-span-4 flex items-center justify-end space-x-4 text-sm font-medium">
                 <a href="{{route('wishlist.index')}}" class="p-3 inline-flex items-center justify-center rounded-lg">
                     <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.8477 19.5921L9.65417 18.5141C7.74744 16.7828 6.1706 15.2951 4.92362 14.051C3.67685 12.807 2.68878 11.7021 1.95942 10.7362C1.22986 9.77044 0.720903 8.88932 0.432542 8.09287C0.144181 7.29643 0 6.48832 0 5.66854C0 4.05971 0.5425 2.71279 1.6275 1.62779C2.71269 0.542597 4.05961 0 5.66825 0C6.67431 0 7.62494 0.238194 8.52017 0.714583C9.41519 1.19097 10.191 1.88203 10.8477 2.78775C11.5259 1.88203 12.3065 1.19097 13.1895 0.714583C14.0722 0.238194 15.0181 0 16.0271 0C17.6357 0 18.9826 0.542402 20.0678 1.62721C21.1528 2.71182 21.6953 4.05815 21.6953 5.66621C21.6953 6.48735 21.5512 7.29614 21.2628 8.09258C20.9744 8.88922 20.4657 9.77025 19.7365 10.7357C19.0073 11.7011 18.0203 12.8062 16.7755 14.051C15.5309 15.2961 13.9527 16.7838 12.0412 18.5141L10.8477 19.5921Z" fill="#FF2E17"/>
