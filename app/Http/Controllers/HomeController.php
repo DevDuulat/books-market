@@ -13,13 +13,11 @@ class HomeController extends Controller
     {
         $banners = Banner::where('is_active', BannerStatus::Active->value)->get();
 
-        // Получаем категории с товарами (лимит 4)
         $categoriesWithProducts = Category::where('name', '!=', 'книги')
             ->with(['products' => function ($query) {
-                $query->where('quantity', '>', 0)->latest()->take(4);
+                $query->latest()->take(4);
             }])
             ->get()
-            ->filter(fn($cat) => $cat->products->isNotEmpty())
             ->map(function ($category) {
                 return [
                     'name' => $category->name,
