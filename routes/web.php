@@ -10,7 +10,7 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index'); 
 
