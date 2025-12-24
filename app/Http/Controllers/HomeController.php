@@ -13,29 +13,29 @@ class HomeController extends Controller
     {
         $banners = Banner::where('is_active', BannerStatus::Active->value)->get();
 
-        $categories = Category::where('name', '!=', 'книги')->pluck('name'); // **ИЗМЕНЕНИЕ ЗДЕСЬ**
-
-        $products = Product::with('category')
-            ->where('quantity', '>', 0)
-            ->whereHas('category', function ($query) {
-                $query->where('name', '!=', 'книги');
-            })
+        // Получаем категории с товарами (лимит 4)
+        $categoriesWithProducts = Category::where('name', '!=', 'книги')
+            ->with(['products' => function ($query) {
+                $query->where('quantity', '>', 0)->latest()->take(4);
+            }])
             ->get()
-            ->map(function ($product) {
+            ->filter(fn($cat) => $cat->products->isNotEmpty())
+            ->map(function ($category) {
                 return [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'slug' => $product->slug,
-                    'category' => $product->category?->name ?? 'Без категории',
-                    'price' => number_format($product->price, 0, '.', ''),
-                    'old_price' => $product->price + ($product->discount ?? 0),
-                    'img' => $product->image
-                        ? asset('storage/' . $product->image)
-                        : asset('assets/products/no-image.png'),
-                    'quantity' => $product->quantity,
+                    'name' => $category->name,
+                    'slug' => $category->slug,
+                    'products' => $category->products->map(fn($p) => [
+                        'id' => $p->id,
+                        'name' => $p->name,
+                        'slug' => $p->slug,
+                        'price' => $p->price,
+                        'old_price' => $p->price + ($p->discount ?? 0),
+                        'img' => $p->image ? asset('storage/'.$p->image) : asset('assets/products/no-image.png'),
+                        'quantity' => $p->quantity,
+                    ])
                 ];
             });
 
-        return view('home', compact('categories', 'products', 'banners'));
+        return view('home', compact('categoriesWithProducts', 'banners'));
     }
 }
