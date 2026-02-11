@@ -13,7 +13,6 @@ class HomeController extends Controller
         $banners = Banner::where('is_active', BannerStatus::Active->value)->get();
 
         $categoriesWithProducts = Category::where('name', '!=', 'книги')
-            // Добавляем случайную сортировку на уровне базы данных
             ->inRandomOrder()
             ->with(['products' => function ($query) {
                 $query->latest()->take(4);
