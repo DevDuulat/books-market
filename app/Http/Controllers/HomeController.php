@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\BannerStatus;
 use App\Models\Banner;
 use App\Models\Category;
-use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -14,6 +13,8 @@ class HomeController extends Controller
         $banners = Banner::where('is_active', BannerStatus::Active->value)->get();
 
         $categoriesWithProducts = Category::where('name', '!=', 'книги')
+            // Добавляем случайную сортировку на уровне базы данных
+            ->inRandomOrder()
             ->with(['products' => function ($query) {
                 $query->latest()->take(4);
             }])
@@ -22,7 +23,7 @@ class HomeController extends Controller
                 return [
                     'name' => $category->name,
                     'slug' => $category->slug,
-                    'products' => $category->products->map(fn($p) => [
+                    'products' => $category->products->map(fn ($p) => [
                         'id' => $p->id,
                         'name' => $p->name,
                         'slug' => $p->slug,
@@ -30,7 +31,7 @@ class HomeController extends Controller
                         'old_price' => $p->price + ($p->discount ?? 0),
                         'img' => $p->image ? asset('storage/'.$p->image) : asset('assets/products/no-image.png'),
                         'quantity' => $p->quantity,
-                    ])
+                    ]),
                 ];
             });
 
